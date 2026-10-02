@@ -1,0 +1,86 @@
+\documentclass[a4paper,addpoints]{article}
+\usepackage{amsfonts,amssymb,amsmath, amsthm}
+\usepackage{xcolor}
+\usepackage{pgf,tikz,pgfplots}
+\pgfplotsset{compat=1.15}
+\usepgfplotslibrary{fillbetween}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usepackage{tabu}
+
+\usepackage{tikz}
+\usetikzlibrary {shapes , arrows , fit , calc, positioning}
+\tikzset{box/.style={draw, rectangle, rounded corners, thick, node distance =7 em, text width =6 em, text centered, minimum height =2.5 em}}
+\tikzset{line/.style={draw, thick, -latex'}}
+
+\usepackage{tikz-uml}
+\tikzumlset{actor below=0.4cm, fill usecase=white, fill class=white, text=black, draw=black}
+
+
+\begin{document}
+
+LifeOS
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{umlsystem}[x=-12] {Sistema}
+        \umlusecase[x=0.5, width=1.8cm]{Registrazione} 
+        \umlusecase[x=0.5, y=-1.5, width=1.8cm]{Landing page} 
+        \umlusecase[x=4, y=-3, width=1.8cm] {Login} 
+        \umlusecase[x=3.5, y=-5, width=1.8cm] {Gestione delle attività}
+        \umlusecase[x=8, y=-4, width=1.8cm] {Dashboard personale}            
+        \umlusecase[x=8, y=-4, width=1.8cm] {Statistiche personali} 
+        \umlusecase[x=8, y=-1, width=1.8cm] {Condivisione di attività e calendari} 
+        \umlusecase[x=8.5, y=-6, width=1.8cm] {Impostazioni e personalizzazione} 
+        \umlusecase[x=0.5, y=-7, width=1.8cm] {Gestione delle abitudini} 
+        \umlusecase[x=7.5, y=-8, width=1.8cm] {Gestione degli obiettivi} 
+        \umlusecase[x=1.5, y=-9, width=1.8cm] {Calendario} 
+        \umlusecase[x=4, y=-1, width=1.8cm] {Gestione delle spese} 
+        \umlusecase[x=5, y=-10, width=1.8cm] {Promemoria e notifiche} 
+        \umlusecase[x=0.5, y=-11, width=1.8cm] {Acquista piano premium}
+        \umlusecase[x=7, y=-12.5, width=1.8cm] {Sincronizzazione tra dispositivi}
+        \umlusecase[x=9, y=-11, width=1.8cm] {Assistente AI}
+    \end{umlsystem}
+        
+    \umlactor[x=-15]{Utente non registrato} 
+    \umlactor[x=-15, y=-4] {Utente registrato}
+    \umlactor[x=-15, y=-8] {Utente premium}
+
+    
+    \umlassoc{Utente non registrato}{usecase-1}
+    \umlassoc{Utente non registrato}{usecase-2}
+    \umlassoc{Utente registrato}{usecase-3}
+    \umlassoc{Utente registrato}{usecase-4}
+    \umlassoc{Utente registrato}{usecase-5}
+    \umlassoc{Utente registrato}{usecase-6}
+    \umlassoc{Utente registrato}{usecase-7}
+    \umlassoc{Utente registrato}{usecase-8}
+    \umlassoc{Utente registrato}{usecase-9}
+    \umlassoc{Utente registrato}{usecase-10}
+    \umlassoc{Utente registrato}{usecase-11}
+    \umlassoc{Utente registrato}{usecase-12}
+    \umlassoc{Utente registrato}{usecase-13}
+    \umlassoc{Utente registrato}{usecase-14}
+    \umlassoc{Utente premium}{usecase-15}
+    \umlassoc{Utente premium}{usecase-16}
+    
+        
+    \umlinclude{usecase-4}{usecase-3}
+    \umlinclude{usecase-5}{usecase-3}
+    \umlinclude{usecase-6}{usecase-3}
+    \umlinclude{usecase-7}{usecase-3}
+    \umlinclude{usecase-8}{usecase-3}
+    \umlinclude{usecase-9}{usecase-3}
+    \umlinclude{usecase-10}{usecase-3}
+    \umlinclude{usecase-11}{usecase-3}
+    \umlinclude{usecase-12}{usecase-3}
+    \umlinclude{usecase-13}{usecase-3}
+    \umlinclude{usecase-15}{usecase-3}
+    \umlinclude{usecase-16}{usecase-3}
+        
+    
+\end{tikzpicture}
+\end{center}
+
+\end{document} 
