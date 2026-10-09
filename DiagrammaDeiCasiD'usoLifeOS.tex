@@ -1,0 +1,96 @@
+\documentclass[a4paper,landscape,addpoints]{article}
+\usepackage{amsfonts,amssymb,amsmath, amsthm}
+\usepackage{xcolor}
+\usepackage{pgf,tikz,pgfplots}
+\pgfplotsset{compat=1.15}
+\usepgfplotslibrary{fillbetween}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usepackage{tabu}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows, fit, calc, positioning}
+\tikzset{box/.style={draw, rectangle, rounded corners, thick, node distance=7em, text width=6em, text centered, minimum height=2.5em}}
+\tikzset{line/.style={draw, thick, -latex'}}
+
+\usepackage{tikz-uml}
+\tikzumlset{actor below=0.4cm, fill usecase=white, fill class=white, text=black, draw=black}
+
+\usepackage{geometry}
+\geometry{a4paper, landscape, margin=0.4cm}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+\textbf{\large LifeOS — Diagramma dei Casi d'Uso}\\[0.2cm]
+\end{center}
+
+\vspace{0.4cm}
+
+\begin{tikzpicture}[scale=0.62, transform shape]
+
+\begin{umlsystem}[x=-6, y=-3, width=44cm, height=26cm] {Sistema LifeOS}
+
+    \umlusecase[x=0, y=12,   width=3.2cm]{Registrazione}
+    \umlusecase[x=0, y=8,    width=3.2cm]{Landing page}
+    \umlusecase[x=0, y=4,    width=3.2cm]{Login}
+
+    \umlusecase[x=10, y=16,  width=3.4cm]{Gestione delle attività}
+    \umlusecase[x=10, y=13,  width=3.4cm]{Gestione delle spese}
+    \umlusecase[x=10, y=10,  width=3.4cm]{Gestione delle abitudini}
+    \umlusecase[x=10, y=7,   width=3.4cm]{Gestione degli obiettivi}
+    \umlusecase[x=10, y=4,   width=3.4cm]{Calendario ed eventi}
+
+    \umlusecase[x=20, y=16,  width=3.4cm]{Dashboard personale}
+    \umlusecase[x=20, y=13,  width=3.4cm]{Statistiche personali}
+    \umlusecase[x=20, y=10,  width=3.4cm]{Promemoria e notifiche}
+    \umlusecase[x=20, y=7,   width=3.4cm]{Impostazioni e personalizzazione}
+
+    \umlusecase[x=31, y=16,  width=3.6cm]{Condivisione di attività e calendari}
+    \umlusecase[x=31, y=12,  width=3.6cm]{Acquista piano premium}
+    \umlusecase[x=31, y=8,   width=3.6cm]{Sincronizzazione tra dispositivi}
+    \umlusecase[x=31, y=4,   width=3.6cm]{Assistente AI}
+
+\end{umlsystem}
+
+\umlactor[x=-13, y=9]      {Utente non registrato}
+\umlactor[x=-13, y=1]      {Utente registrato}
+\umlactor[x=-13, y=-7]     {Utente premium}
+
+\umlgeneralization{Utente premium}{Utente registrato}
+\umlgeneralization{Utente registrato}{Utente non registrato}
+
+\umlassoc{Utente non registrato}{usecase-1}
+\umlassoc{Utente non registrato}{usecase-2}
+
+\umlassoc{Utente registrato}{usecase-3}
+
+\umlassoc{Utente premium}{usecase-14}
+\umlassoc{Utente premium}{usecase-15}
+\umlassoc{Utente premium}{usecase-16}
+
+\umlinclude{usecase-3}{usecase-4}
+\umlinclude{usecase-3}{usecase-5}
+\umlinclude{usecase-3}{usecase-6}
+\umlinclude{usecase-3}{usecase-7}
+\umlinclude{usecase-3}{usecase-8}
+\umlinclude{usecase-3}{usecase-9}
+\umlinclude{usecase-3}{usecase-10}
+\umlinclude{usecase-3}{usecase-11}
+\umlinclude{usecase-3}{usecase-12}
+\umlinclude{usecase-3}{usecase-13}
+
+\umlinclude{usecase-10}{usecase-9}
+\umlinclude{usecase-11}{usecase-8}
+\umlinclude{usecase-13}{usecase-8}
+\umlinclude{usecase-15}{usecase-13}
+
+\umlextend{usecase-14}{usecase-12}
+\umlextend{usecase-16}{usecase-9}
+
+\end{tikzpicture}
+
+\end{document}

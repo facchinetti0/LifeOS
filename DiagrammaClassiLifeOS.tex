@@ -1,0 +1,252 @@
+\documentclass[a4paper,landscape,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{tikz}
+\usepackage{tikz-uml}
+\usepackage{geometry}
+\geometry{a4paper, landscape, margin=0.3cm}
+
+\usetikzlibrary{positioning, shapes, arrows.meta, fit, backgrounds}
+
+\pagestyle{empty}
+
+\tikzumlset{fill class=white}
+
+\begin{document}
+
+\begin{center}
+\textbf{\large LifeOS — Diagramma delle Classi}\\[0.2cm]
+\end{center}
+
+\vspace{0.4cm}
+
+\begin{tikzpicture}[scale=0.48, transform shape, every node/.style={font=\scriptsize}]
+
+
+\umlclass[type=abstract, x=0, y=0]{Utente}{
+    - id : int \\
+    - nome : String \\
+    - email : String \\
+    - password : String \\
+    - dataRegistrazione : Date \\
+    - tipo : TipoUtente
+}{
+    + login() : boolean \\
+    + logout() : void \\
+    + registrati() : boolean \\
+    + modificaProfilo() : void
+}
+
+\umlenum[x=-6, y=0]{TipoUtente}{
+    FREE \\
+    PREMIUM
+}
+
+\umlclass[x=0, y=-10]{UtenteFree}{
+    \textit{(eredita da Utente)}
+}{
+    + funzionalitaBase() : void
+}
+
+\umlclass[x=0, y=-16]{UtentePremium}{
+    - dataScadenza : Date
+}{
+    + sincronizzaDispositivi() : void \\
+    + usaAssistenteAI() : void \\
+    + statisticheAvanzate() : void
+}
+
+\umlinherit{UtenteFree}{Utente}
+\umlinherit{UtentePremium}{Utente}
+\umluniassoc[mult1=1, mult2=1, pos=0.5]{Utente}{TipoUtente}
+
+
+\umlclass[x=9, y=0]{Sincronizzazione}{
+    - id : int \\
+    - dispositivi : List<String> \\
+    - ultimaSincronizzazione : DateTime
+}{
+    + sincronizza() : boolean \\
+    + aggiungiDispositivo(d : String) : void
+}
+
+\umlclass[x=9, y=-10]{AssistenteAI}{
+    - id : int \\
+    - modello : String
+}{
+    + suggerisciOrganizzazione() : List<String> \\
+    + analizzaGiornata() : Report
+}
+
+\umlclass[x=9, y=-19]{PianoPremium}{
+    - id : int \\
+    - prezzo : double \\
+    - durata : int
+}{
+    + acquista() : boolean \\
+    + rinnova() : boolean
+}
+
+\umluniassoc[mult1=1, mult2=1, pos=0.4]{UtentePremium}{Sincronizzazione}
+\umluniassoc[mult1=1, mult2=1, pos=0.6]{UtentePremium}{AssistenteAI}
+\umluniassoc[mult1=1, mult2=1, pos=0.5]{UtentePremium}{PianoPremium}
+
+
+\umlclass[x=18, y=0]{Statistica}{
+    - id : int \\
+    - tipo : String \\
+    - periodo : String
+}{
+    + genera() : Report \\
+    + visualizza() : void
+}
+
+\umlclass[x=18, y=-8]{Dashboard}{
+    - dataOggi : Date
+}{
+    + mostraPanoramica() : void \\
+    + mostraAttivitaDaCompletare() : void \\
+    + mostraProssimiAppuntamenti() : void \\
+    + mostraRiepilogoSpese() : void
+}
+
+\umlclass[x=18, y=-18]{Promemoria}{
+    - id : int \\
+    - messaggio : String \\
+    - dataOra : DateTime \\
+    - inviato : boolean
+}{
+    + programma() : void \\
+    + invia() : void
+}
+
+\umlclass[x=18, y=-26]{Notifica}{
+    - id : int \\
+    - titolo : String \\
+    - contenuto : String \\
+    - letta : boolean
+}{
+    + invia() : void \\
+    + segnaLetta() : void
+}
+
+\umluniassoc[mult1=1, mult2=1, pos=0.4]{Utente}{Dashboard}
+\umluniassoc[mult1=1, mult2=*, pos=0.5]{Utente}{Statistica}
+\umluniassoc[mult1=1, mult2=*, pos=0.5]{Utente}{Promemoria}
+\umluniassoc[mult1=1, mult2=1, pos=0.6]{Promemoria}{Notifica}
+
+\umlclass[x=28, y=0]{Attivita}{
+    - id : int \\
+    - titolo : String \\
+    - descrizione : String \\
+    - priorita : Priorita \\
+    - categoria : String \\
+    - scadenza : Date \\
+    - completata : boolean
+}{
+    + crea() : void \\
+    + modifica() : void \\
+    + elimina() : void \\
+    + segnaCompletata() : void
+}
+
+\umlenum[x=36, y=0]{Priorita}{
+    BASSA \\
+    MEDIA \\
+    ALTA
+}
+
+\umlclass[x=28, y=-12]{Obiettivo}{
+    - id : int \\
+    - titolo : String \\
+    - descrizione : String \\
+    - progresso : int \\
+    - dataInizio : Date \\
+    - dataFine : Date \\
+    - completato : boolean
+}{
+    + crea() : void \\
+    + aggiornaProgresso(p : int) : void \\
+    + visualizzaStato() : void
+}
+
+\umlclass[x=28, y=-23]{Abitudine}{
+    - id : int \\
+    - nome : String \\
+    - frequenza : String \\
+    - streak : int \\
+    - dataInizio : Date
+}{
+    + crea() : void \\
+    + registraProgresso() : void \\
+    + calcolaStreak() : int
+}
+
+\umluniassoc[mult1=1, mult2=*, pos=0.3]{Utente}{Attivita}
+\umluniassoc[mult1=1, mult2=*, pos=0.3]{Utente}{Obiettivo}
+\umluniassoc[mult1=1, mult2=*, pos=0.3]{Utente}{Abitudine}
+\umluniassoc[mult1=*, mult2=1, pos=0.5]{Attivita}{Priorita}
+
+
+\umlclass[x=44, y=0]{Spesa}{
+    - id : int \\
+    - importo : double \\
+    - descrizione : String \\
+    - data : Date
+}{
+    + registra() : void \\
+    + modifica() : void \\
+    + elimina() : void
+}
+
+\umlclass[x=44, y=-9]{Categoria}{
+    - id : int \\
+    - nome : String \\
+    - colore : String
+}{
+    + crea() : void \\
+    + modifica() : void \\
+    + elimina() : void
+}
+
+\umlclass[x=44, y=-19]{Calendario}{
+    - id : int \\
+    - nome : String
+}{
+    + aggiungiEvento(e : Evento) : void \\
+    + rimuoviEvento(id : int) : void \\
+    + visualizzaGiorno(d : Date) : List<Evento>
+}
+
+\umlclass[x=44, y=-29]{Evento}{
+    - id : int \\
+    - titolo : String \\
+    - data : Date \\
+    - oraInizio : Time \\
+    - oraFine : Time \\
+    - tipo : String
+}{}
+
+\umluniassoc[mult1=1, mult2=*, pos=0.4]{Utente}{Spesa}
+\umluniassoc[mult1=*, mult2=1, pos=0.6]{Spesa}{Categoria}
+\umluniassoc[mult1=1, mult2=1, pos=0.3]{Utente}{Calendario}
+\umlcompo[mult1=1, mult2=*, pos=0.5]{Calendario}{Evento}
+
+\umlclass[x=44, y=-14.3]{Condivisione}{
+    - id : int \\
+    - dataCondivisione : Date \\
+    - tipo : String
+}{
+    + condividiAttivita(a : Attivita, u : Utente) : void \\
+    + condividiCalendario(c : Calendario, u : Utente) : void \\
+    + revocaCondivisione() : void
+}
+
+\umluniassoc[mult1=1, mult2=*, pos=0.4]{Utente}{Condivisione}
+\umluniassoc[mult1=*, mult2=1, pos=0.5]{Condivisione}{Attivita}
+\umluniassoc[mult1=*, mult2=1, pos=0.5]{Condivisione}{Calendario}
+
+\end{tikzpicture}
+
+\end{document}
